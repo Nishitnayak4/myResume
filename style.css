@@ -1,0 +1,107 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+  margin: 0;
+  padding: 0 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+h1 {
+  margin-bottom: 0.2rem;
+  font-size: 2.5rem;
+  color: #222;
+}
+
+h2 {
+  margin-top: 2rem;
+  color: #555;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 0.3rem;
+}
+
+p, li {
+  line-height: 1.5;
+  font-size: 1rem;
+  color: #444;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+a.button, button.button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+a.button:hover, button.button:hover {
+  background-color: #1e40af;
+  transform: scale(1.05);
+}
+
+.contact-info {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.social-links {
+  margin-top: 0.5rem;
+}
+
+.social-links a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #1e40af;
+}
+
+/* 🌙 Dark Mode */
+body.dark {
+  background: #1a202c;
+  color: #f4f4f4;
+}
+
+body.dark .container {
+  background: #2d3748;
+}
+
+body.dark h2 {
+  border-bottom-color: #90cdf4;
+}
+
+body.dark a.button, 
+body.dark button.button {
+  background-color: #90cdf4;
+  color: #1a202c;
+}
+
+body.dark a.button:hover,
+body.dark button.button:hover {
+  background-color: #63b3ed;
+}
