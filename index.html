@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Focus Test</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+
+        #intro {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #test-area {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            cursor: crosshair;
+            transition: background-color 3s ease;
+        }
+
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+        }
+
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #333;
+        }
+
+        .crosshair::before {
+            top: 19px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+        }
+
+        .crosshair::after {
+            top: 0;
+            left: 19px;
+            width: 2px;
+            height: 40px;
+        }
+
+        #jumpscare-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro">
+        <h1>Visual Focus & Reaction Test</h1>
+        <p>This test measures your hand-eye coordination and visual response time. <strong>Make sure your volume is turned up</strong> to hear the audio cues.</p>
+        <p>When you click start, stare closely at the crosshair in the center of the screen. As soon as you hear a beep or see a change, click the screen as fast as possible.</p>
+        <button id="start-btn">Start Test</button>
+    </div>
+
+    <div id="test-area">
+        <div class="crosshair"></div>
+    </div>
+
+    <div id="jumpscare-container">
+        <video id="scare-video" src="video.mp4" preload="auto"></video>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const intro = document.getElementById('intro');
+        const testArea = document.getElementById('test-area');
+        const jumpscareContainer = document.getElementById('jumpscare-container');
+        const scareVideo = document.getElementById('scare-video');
+
+        startBtn.addEventListener('click', async () => {
+            // Attempt to go fullscreen for maximum effect
+            try {
+                if (document.documentElement.requestFullscreen) {
+                    await document.documentElement.requestFullscreen();
+                }
+            } catch (e) {
+                console.log("Fullscreen not supported or blocked.");
+            }
+
+            intro.style.display = 'none';
+            testArea.style.display = 'block';
+
+            // Make the background dim slowly to make them focus more
+            setTimeout(() => {
+                testArea.style.backgroundColor = '#cccccc';
+            }, 1000);
+            
+            setTimeout(() => {
+                testArea.style.backgroundColor = '#999999';
+            }, 2500);
+
+            setTimeout(() => {
+                testArea.style.backgroundColor = '#444444';
+            }, 4000);
+
+            // Trigger jumpscare after 5 seconds
+            setTimeout(() => {
+                triggerJumpscare();
+            }, 5000);
+        });
+
+        function triggerJumpscare() {
+            testArea.style.display = 'none';
+            jumpscareContainer.style.display = 'block';
+            
+            // Play the video loudly
+            scareVideo.volume = 1.0;
+            scareVideo.play().catch(e => console.error("Error playing video:", e));
+            
+            // Prevent exiting easily by re-requesting fullscreen if possible
+            scareVideo.addEventListener('ended', () => {
+                // Return to normal or just stay black
+                jumpscareContainer.innerHTML = '<h1 style="color:red; text-align:center; margin-top:20%; font-family:sans-serif;">Test Complete.</h1>';
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
